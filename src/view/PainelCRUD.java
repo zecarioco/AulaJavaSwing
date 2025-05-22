@@ -17,6 +17,7 @@ public class PainelCRUD extends JPanel {
 
     public PainelCRUD() {
         Color cor = new Color(123, 50,250);
+        Color cor2 = new Color(167, 122, 245);
         setLayout(new BorderLayout(10, 10));
         setBackground(cor);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -84,7 +85,7 @@ public class PainelCRUD extends JPanel {
 
         // Lista
         lista.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lista.setBackground(Color.LIGHT_GRAY);
+        lista.setBackground(cor2);
 
         add(painelFormulario, BorderLayout.NORTH);
         add(new JScrollPane(lista), BorderLayout.CENTER);
