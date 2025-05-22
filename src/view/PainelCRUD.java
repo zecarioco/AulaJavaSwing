@@ -25,7 +25,7 @@ public class PainelCRUD extends JPanel {
         JPanel painelFormulario = new JPanel(new GridBagLayout());
         painelFormulario.setBackground(cor);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
