@@ -73,7 +73,7 @@ public class PainelCRUD extends JPanel {
         painelFormulario.add(campoData, gbc);
 
         // Painel para botões
-        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 0));
         painelBotoes.setBackground(cor);
         painelBotoes.add(botaoAdicionar);
         painelBotoes.add(botaoRemover);
