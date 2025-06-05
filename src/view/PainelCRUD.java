@@ -1,7 +1,7 @@
 package view;
 
 import javax.swing.*;
-import model.Atividade;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class PainelCRUD extends JPanel {
@@ -11,8 +11,8 @@ public class PainelCRUD extends JPanel {
     public JButton botaoAdicionar = new JButton("Adicionar");
     public JButton botaoRemover = new JButton("Remover");
     public JButton botaoEditar = new JButton("Editar");
-    public DefaultListModel<Atividade> modeloLista = new DefaultListModel<>();
-    public JList<Atividade> lista = new JList<>(modeloLista);
+    public DefaultTableModel modeloTabela = new DefaultTableModel(new String[]{"Nome", "Descrição", "Data"}, 0);
+    public JTable table = new JTable(modeloTabela);
     private int indiceEdicao = -1;
 
     public PainelCRUD() {
@@ -83,12 +83,12 @@ public class PainelCRUD extends JPanel {
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
         painelFormulario.add(painelBotoes, gbc);
 
-        // Lista
-        lista.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lista.setBackground(cor2);
+        // Table
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.setBackground(cor2);
 
         add(painelFormulario, BorderLayout.NORTH);
-        add(new JScrollPane(lista), BorderLayout.CENTER);
+        add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
     public int getIndiceEdicao(){
