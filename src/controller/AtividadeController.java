@@ -21,6 +21,9 @@ public class AtividadeController {
     private final ArrayList<Atividade> atividades = new ArrayList<>();
 
     public AtividadeController(Interface tela) {
+        String caminhoProjeto = System.getProperty("user.dir");
+        CAMINHO_ARQUIVO = caminhoProjeto + "/src/data/data.csv";
+
         this.tela = tela;
 
         tela.painelInicio.botaoIniciar.addActionListener(e -> tela.mostrarPainelCRUD());
