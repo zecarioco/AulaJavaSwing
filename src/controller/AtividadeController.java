@@ -18,6 +18,13 @@ public class AtividadeController {
         tela.painelCRUD.botaoAdicionar.addActionListener(e -> adicionarAtividade());
         tela.painelCRUD.botaoRemover.addActionListener(e -> removerSelecionada());
         tela.painelCRUD.botaoEditar.addActionListener(e -> editarSelecionada());
+
+        /* tela.painelCRUD.botaoAdicionar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    adicionarAtividade();
+                }
+        }); */
     }
 
     private void adicionarAtividade() {
