@@ -5,10 +5,19 @@ import model.Atividade;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class AtividadeController {
     private final Interface tela;
+    private String CAMINHO_ARQUIVO = "data.csv";
     private final ArrayList<Atividade> atividades = new ArrayList<>();
 
     public AtividadeController(Interface tela) {
@@ -18,6 +27,13 @@ public class AtividadeController {
         tela.painelCRUD.botaoAdicionar.addActionListener(e -> adicionarAtividade());
         tela.painelCRUD.botaoRemover.addActionListener(e -> removerSelecionada());
         tela.painelCRUD.botaoEditar.addActionListener(e -> editarSelecionada());
+
+        try{
+            carregarDoArquivo();
+        }
+        catch(FileNotFoundException f){
+            System.err.println(f);
+        }
 
         /* tela.painelCRUD.botaoAdicionar.addActionListener(new ActionListener() {
                 @Override
@@ -52,12 +68,14 @@ public class AtividadeController {
 
             tela.painelCRUD.setIndiceEdicao(-1);
             tela.painelCRUD.botaoAdicionar.setText("Adicionar");
+            salvarEmArquivo();
         } else {
             // Nova atividade
             Atividade nova = new Atividade(nome, desc, data);
             atividades.add(nova);
 
             tela.painelCRUD.modeloTabela.addRow(new String[]{nome, desc, data});
+            salvarEmArquivo();
         }
 
         limparCampos();
@@ -69,6 +87,8 @@ public class AtividadeController {
             atividades.remove(index);
             tela.painelCRUD.modeloTabela.removeRow(index);
         }
+
+        salvarEmArquivo();
     }
 
     private void editarSelecionada() {
@@ -92,4 +112,42 @@ public class AtividadeController {
         tela.painelCRUD.campoData.setText("");
         tela.painelCRUD.table.clearSelection();
     }
+
+    private void salvarEmArquivo() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(CAMINHO_ARQUIVO))) {
+            for (Atividade atividade : atividades) {
+                writer.printf("%s,%s,%s%n",
+                        atividade.getTitulo().replace(",", " "),
+                        atividade.getDescricao().replace(",", " "),
+                        atividade.getDataEntrega().replace(",", " "));
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(tela.painelCRUD, "Erro ao salvar arquivo: " + e.getMessage());
+        }
+    }
+
+    private void carregarDoArquivo() throws FileNotFoundException{
+        File arquivo = new File(CAMINHO_ARQUIVO);
+        if (!arquivo.exists()){
+            throw new FileNotFoundException("Arquivo não encontrado");
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] partes = linha.split(",", -1);
+                Atividade a = new Atividade(partes[0], partes[1], partes[2]);
+                if (partes.length == 3) {
+                    atividades.add(a);
+                    tela.painelCRUD.modeloTabela.addRow(new String[]{partes[0], partes[1], partes[2]});
+                }
+                else{
+                    System.out.println("Atividade - " + a + " não salva");
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(tela.painelCRUD, "Erro ao carregar arquivo: " + e.getMessage());
+        }
+    }
+
 }
