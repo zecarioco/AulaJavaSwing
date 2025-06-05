@@ -142,7 +142,7 @@ public class AtividadeController {
                     tela.painelCRUD.modeloTabela.addRow(new String[]{partes[0], partes[1], partes[2]});
                 }
                 else{
-                    System.out.println("Atividade - " + a + " não salva");
+                    System.out.println("Atividade - " + a + " não salva, partes insuficientes");
                 }
             }
         } catch (IOException e) {
